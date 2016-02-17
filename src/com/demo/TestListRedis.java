@@ -40,5 +40,6 @@ public class TestListRedis {
 
 
         System.out.println("修改指定下标的值==》" + redis.lset("ltrim", 0, "1111111111111"));
+        System.out.println("获取指定下标的值==》" + redis.lindex("ltrim", 0));
     }
 }

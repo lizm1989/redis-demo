@@ -211,11 +211,11 @@ public class RedisManager {
     }
 
     //放入list的值,将所有指定的值插入到存于 key 的列表的头部
-    public void lpush(String key, String... strings) {
+    public Long lpush(String key, String... strings) {
         Jedis redis = null;
         try {
             redis = pool.getResource();
-            redis.lpush(key, strings);
+            return redis.lpush(key, strings);
         } finally {
             releaseJedis(pool, redis);
         }
@@ -267,6 +267,73 @@ public class RedisManager {
         try {
             redis = pool.getResource();
             return redis.lset(key, index, value);
+        } finally {
+            releaseJedis(pool, redis);
+        }
+    }
+
+
+    //获取指定下标的值
+    public String lindex(String key, int index) {
+        Jedis redis = null;
+        try {
+            redis = pool.getResource();
+            return redis.lindex(key, index);
+        } finally {
+            releaseJedis(pool, redis);
+        }
+    }
+
+    //添加一个或多个元素到集合里，返回成功次数
+    public Long sadd(String key, String... value) {
+        Jedis redis = null;
+        try {
+            redis = pool.getResource();
+            return redis.sadd(key, value);
+        } finally {
+            releaseJedis(pool, redis);
+        }
+    }
+
+    // 查看sets集合中的所有元素
+    public Set<String> smembers(String key) {
+        Jedis redis = null;
+        try {
+            redis = pool.getResource();
+            return redis.smembers(key);
+        } finally {
+            releaseJedis(pool, redis);
+        }
+    }
+
+    //删除集合特定元素,返回成功个数
+    public Long srem(String key, String... value) {
+        Jedis redis = null;
+        try {
+            redis = pool.getResource();
+            return redis.srem(key, value);
+        } finally {
+            releaseJedis(pool, redis);
+        }
+    }
+
+    //随机弹出一个元素
+    public String spop(String key) {
+        Jedis redis = null;
+        try {
+            redis = pool.getResource();
+            return redis.spop(key);
+        } finally {
+            releaseJedis(pool, redis);
+        }
+    }
+
+    //判断某个元素是否在集合中
+    public Boolean sismember(String key, String member) {
+        Jedis redis = null;
+        try {
+            redis = pool.getResource();
+            return redis.sismember(key, member);
         } finally {
             releaseJedis(pool, redis);
         }
