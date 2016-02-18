@@ -33,3 +33,19 @@
 3.	Long srem(String key,String... value)删除集合指定元素，返回成功个数
 4.	String spop(String key) 随机返回集合一个元素
 5.	Boolean sismember(String key, String member)查看某个元素是否在集合中
+6.	Set<String> sinter(String... key) 交集
+7.	Set<String> sunion(String... key) 并集
+8.	Set<String> sdiff(String... key) 差集
+
+
+####sortedset方法介绍
+----------	
+1.	Long zadd(String key,double var2,String value)添加集合元素
+2.	Set<String> zrange(String key,int start,int end)返回集合元素
+3.	Long zcard(String key)返回集合元素个数
+4.	Long zcount(String key,double var1,double var2)返回集合权重范围个数
+5.	Double zscore(String key,String member)返回集合元素的权重
+
+
+####hash方法介绍
+----------	

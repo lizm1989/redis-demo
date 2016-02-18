@@ -28,5 +28,18 @@ public class TestSetRedis {
         System.out.println("查看testSet集合所有元素==>" + redis.smembers("testSet"));
 
         System.out.println("查看某个元素是否在集合中==>" + redis.sismember("testSet", "111"));
+
+
+        redis.sadd("set1", "111");
+        redis.sadd("set1", "222");
+        redis.sadd("set1", "333");
+        redis.sadd("set1", "444");
+
+        redis.sadd("set2", "222");
+        redis.sadd("set2", "333");
+
+        System.out.println("交集==>" + redis.sinter(new String[]{"set1", "set2"}));
+        System.out.println("并集==>" + redis.sunion(new String[]{"set1", "set2"}));
+        System.out.println("差集==>" + redis.sdiff(new String[]{"set1", "set2"}));
     }
 }

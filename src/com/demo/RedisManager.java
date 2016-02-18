@@ -37,9 +37,11 @@ public class RedisManager {
         config.setMaxActive(maxActive);
         config.setMaxIdle(maxIdel);
         config.setMaxWait(maxWait);
+        // config.
 
         String[] hosts = host.split(":");
         pool = new JedisPool(config, hosts[0], Integer.parseInt(hosts[1]));
+
     }
 
     private static void releaseJedis(JedisPool pool, Jedis redis) {
@@ -334,6 +336,117 @@ public class RedisManager {
         try {
             redis = pool.getResource();
             return redis.sismember(key, member);
+        } finally {
+            releaseJedis(pool, redis);
+        }
+    }
+
+    //交集
+    public Set<String> sinter(String... keys) {
+        Jedis redis = null;
+        try {
+            redis = pool.getResource();
+            return redis.sinter(keys);
+        } finally {
+            releaseJedis(pool, redis);
+        }
+    }
+
+    //并集
+    public Set<String> sunion(String... keys) {
+        Jedis redis = null;
+        try {
+            redis = pool.getResource();
+            return redis.sunion(keys);
+        } finally {
+            releaseJedis(pool, redis);
+        }
+    }
+
+    //差集
+    public Set<String> sdiff(String... keys) {
+        Jedis redis = null;
+        try {
+            redis = pool.getResource();
+            return redis.sdiff(keys);
+        } finally {
+            releaseJedis(pool, redis);
+        }
+    }
+
+    //添加集合元素
+    public Long zadd(String var1, double var2, String var4) {
+        Jedis redis = null;
+        try {
+            redis = pool.getResource();
+            return redis.zadd(var1, var2, var4);
+        } finally {
+            releaseJedis(pool, redis);
+        }
+    }
+
+    //返回集合元素
+    public Set<String> zrange(String key, int start, int end) {
+        Jedis redis = null;
+        try {
+            redis = pool.getResource();
+            return redis.zrange(key, start, end);
+        } finally {
+            releaseJedis(pool, redis);
+        }
+    }
+
+    //删除集合中的元素
+    public Long zrem(String key, String... value) {
+        Jedis redis = null;
+        try {
+            redis = pool.getResource();
+            return redis.zrem(key, value);
+        } finally {
+            releaseJedis(pool, redis);
+        }
+    }
+
+    //返回集合元素个数
+    public Long zcard(String key) {
+        Jedis redis = null;
+        try {
+            redis = pool.getResource();
+            return redis.zcard(key);
+        } finally {
+            releaseJedis(pool, redis);
+        }
+    }
+
+
+    //返回集合权重范围个数
+    public Long zcount(String key, double var1, double var2) {
+        Jedis redis = null;
+        try {
+            redis = pool.getResource();
+            return redis.zcount(key, var1, var2);
+        } finally {
+            releaseJedis(pool, redis);
+        }
+    }
+
+    //返回集合元素的权重
+    public Double zscore(String key, String member) {
+        Jedis redis = null;
+        try {
+            redis = pool.getResource();
+            return redis.zscore(key, member);
+        } finally {
+            releaseJedis(pool, redis);
+        }
+    }
+
+    //网hashset集合添加元素
+    public Long hset(String key, String field, String value) {
+        Jedis redis = null;
+        try {
+            redis = pool.getResource();
+            return redis.hset(key, field, value);
         } finally {
             releaseJedis(pool, redis);
         }
